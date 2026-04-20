@@ -1,0 +1,93 @@
+{
+  "theme": "Dark",
+  "archetype": "Archetype 4 (Swiss & High-Contrast) + Terminal/Industrial variant",
+  "domain": "Smart Predictive Maintenance System (Industrial IoT)",
+  "typography": {
+    "headings": "IBM Plex Sans",
+    "body": "Manrope",
+    "mono": "JetBrains Mono",
+    "hierarchy": {
+      "h1": "text-3xl sm:text-4xl tracking-tight font-bold",
+      "h2": "text-2xl sm:text-3xl tracking-tight font-semibold",
+      "h3": "text-xl sm:text-2xl font-semibold",
+      "metrics": "text-4xl sm:text-5xl font-mono tracking-tighter"
+    }
+  },
+  "colors": {
+    "background": "#0A0A0E",
+    "surface": "#15151C",
+    "surface_hover": "#1D1D26",
+    "border": "#262630",
+    "primary": "#FF5A00",
+    "primary_hover": "#E65100",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#9CA3AF",
+    "text_muted": "#6B7280",
+    "status": {
+      "normal": "#A3E635",
+      "warning": "#F59E0B",
+      "critical": "#DC2626"
+    }
+  },
+  "layout": {
+    "spacing_scale": "Tight gaps (gap-4 or gap-6) for dashboard density. Generous padding (p-6, p-8) inside cards.",
+    "grid_strategy": "Control Room Grid (grid-cols-1 md:grid-cols-3 lg:grid-cols-4)",
+    "border_radius": "Sharp edges. Use rounded-none or max rounded-sm (2px-4px) for technical feel."
+  },
+  "surfaces": {
+    "cards": "Flat solid background (#15151C), 1px sharp inner border (border-white/10), no shadow.",
+    "headers": "Solid background (#0A0A0E) with hard bottom border (#262630). Avoid glassmorphism to maintain maximum data legibility.",
+    "buttons": "Square edges (rounded-none), high contrast, slight brightness increase on hover. Never use generic soft shadows."
+  },
+  "components": {
+    "charts": "Recharts library. Use monospace fonts for axes. Thin stroke lines (strokeWidth={1.5}). Remove default axes lines, use dotted grid lines.",
+    "badges": "Uppercase, text-[10px], tracking-widest, bold. Solid background with contrasting text. No rounded corners.",
+    "alerts": "Sonner toasts. Colored left borders based on severity (Green/Yellow/Red).",
+    "data_testids": "All interactive elements MUST have data-testid attributes (e.g., login-submit-button, machine-selector, download-report-btn)."
+  },
+  "animation": {
+    "hover": "Instant or very fast transition (150ms). Focus on border color changes rather than background shifts.",
+    "live_data": "Use Framer Motion to softly pulsate critical metrics. Trigger subtle flash animations when state shifts to Critical."
+  },
+  "icons": {
+    "library": "Phosphor Icons (@phosphor-icons/react)",
+    "style": "Regular or Bold weights. Avoid Duotone to maintain solid, technical read."
+  },
+  "media": {
+    "login_background": {
+      "url": "https://images.pexels.com/photos/17323801/pexels-photo-17323801.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Dark server room used for login page backdrop",
+      "category": "background"
+    },
+    "admin_avatar": {
+      "url": "https://images.pexels.com/photos/7937962/pexels-photo-7937962.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Female engineer in hard hat for Admin profile",
+      "category": "avatar"
+    },
+    "engineer_avatar": {
+      "url": "https://images.pexels.com/photos/32845660/pexels-photo-32845660.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Male engineer in helmet for Engineer profile",
+      "category": "avatar"
+    },
+    "machine_thumb_1": {
+      "url": "https://images.unsplash.com/photo-1666557112536-93397d61a045?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwzfHxkYXJrJTIwaW5kdXN0cmlhbCUyMGZhY3RvcnklMjBtYWNoaW5lJTIwY2xvc2UlMjB1cHxlbnwwfHx8fDE3NzY3MDU0OTd8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Industrial machine closeup for machine selector",
+      "category": "thumbnail"
+    },
+    "machine_thumb_2": {
+      "url": "https://images.pexels.com/photos/27084598/pexels-photo-27084598.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Heavy industrial machine part for machine selector",
+      "category": "thumbnail"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Install dependencies: yarn add @phosphor-icons/react recharts framer-motion",
+    "Use Shadcn primitives but OVERRIDE border-radius to `rounded-none` or `rounded-sm`. The design must feel industrial, sharp, and strict.",
+    "Implement the 'Control Room' grid layout: `grid-cols-1 md:grid-cols-3 lg:grid-cols-4` with `gap-4` or `gap-6`.",
+    "Use JetBrains Mono for all numeric values, sensor readings, and chart axes.",
+    "Implement simulated real-time data using a React hook that pushes new data to arrays every 2-3 seconds to animate Recharts.",
+    "AI Analysis Panel should look like a command-line output or terminal interface (darker inset background, monospace text).",
+    "Apply `data-testid` to ALL buttons, inputs, tabs, chart wrappers, and machine selector items for E2E testability.",
+    "Do NOT use teal/purple gradients. Adhere strictly to the High-Contrast Obsidian & Safety Orange palette."
+  ]
+}
