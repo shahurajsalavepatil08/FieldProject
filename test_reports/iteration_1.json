@@ -1,0 +1,41 @@
+{
+  "summary": "End-to-end testing of Smart Predictive Maintenance System. Backend: 23/23 pytest cases pass after fixing one BSON ObjectId serialization bug in /api/auth/register. Frontend: all 8 critical flows pass (admin/engineer login, dashboard with sensor cards + health gauge + AI panel, machine selector switching m1->m3, History page with machine/range filters, Admin tabs (users/thresholds/logs), role-based navigation, logout, engineer guarded from /admin). LLM AI insights are actually working (returned source='llm' content for Assembly Line Alpha) — fallback also tested.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Dashboard / History TrendChart", "issues": ["Recharts ResponsiveContainer logs repeated console warning 'width(-1) and height(-1) of chart should be greater than 0' on first paint before the panel has dimensions. Cosmetic only — chart eventually renders correctly. Consider giving the chart wrapper an explicit min-height or aspect ratio."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "(Optional) Suppress recharts width/height(-1) warnings by giving TrendChart container a fixed min-height (e.g. h-[280px]) so ResponsiveContainer has dimensions on first render."
+  ],
+  "critical_code_review_comments": [
+    "FIXED: /api/auth/register returned 500 because motor's insert_one mutates the dict to add ObjectId _id, and that _id was then leaked into the response payload (PydanticSerializationError). Updated server.py:296 to exclude both 'password' and '_id' (matching the pattern already used in /auth/login).",
+    "server.py @app.on_event('startup'/'shutdown') is deprecated in FastAPI; consider migrating to lifespan context manager. Not blocking.",
+    "background_sim runs forever with a bare `while True` and a 3s tick — fine, but on shutdown the task is never cancelled (only client.close() is called). Minor leak risk on reload.",
+    "AIPanel + Dashboard auto-fire /api/ai-insights on every machine switch which can be expensive when LLM is enabled. Consider debouncing or caching per machine.",
+    "Frontend Dashboard.refresh() swallows all errors silently; a stale/expired token will produce no user feedback. Consider catching 401 explicitly and routing to /login.",
+    "Login.jsx pre-fills admin@pm.com / admin123 — fine for a demo but should be stripped for production builds.",
+    "Admin.jsx delete user has no confirmation dialog — easy mis-click."
+  ],
+  "updated_files": [
+    "/app/backend/server.py (excluded _id from register response)",
+    "/app/backend/tests/backend_test.py (new pytest suite, 23 cases)"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "admin@pm.com / admin123, engineer@pm.com / engineer123 (from /app/memory/test_credentials.md, seeded by backend startup).",
+  "seed_data_creation": "None — backend startup seeds the two demo users automatically and a background simulator inserts a sensor reading every 3s per machine, populating /history and /alerts.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All backend endpoints verified (auth login/register/me, machines, get-data, send-data persistence via subsequent /history GET, history, alerts, ai-insights with source='llm' or 'rules', thresholds GET/PUT with engineer-403, users admin-only, logs admin-only, PDF returns application/pdf with %PDF magic bytes). All major UI flows verified including role-based navigation guard (engineer redirected from /admin back to /). LLM is currently functional (responded with model output, not just rules). The only fix applied was the ObjectId serialization bug in /auth/register; no business-logic changes were made.",
+  "rca of the issue": "BUG: POST /api/auth/register -> 500 Internal Server Error. ROOT CAUSE: motor's `db.users.insert_one(user)` mutates the in-place dict to add a BSON ObjectId at key `_id`. The next line built `pub = {k: v for k, v in user.items() if k != 'password'}` which therefore included the ObjectId. FastAPI/Pydantic then failed with `PydanticSerializationError: Unable to serialize unknown type: <class 'bson.objectid.ObjectId'>` while serialising the TokenResp.user dict. REPRO: POST /api/auth/register with any new email/password. MITIGATION: Exclude `_id` in the comprehension (server.py line 296) — same pattern already used in /auth/login at line 304. Verified with re-run of TestAuth.test_register_new -> PASSED."
+}
