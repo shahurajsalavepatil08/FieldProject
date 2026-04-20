@@ -21,8 +21,8 @@ export default function Layout({ children }) {
                 <Lightning size={16} weight="bold"/>
               </div>
               <div className="hidden sm:block">
-                <div className="mono text-[10px] tracking-[0.3em] text-white/60 leading-none">SENTINEL / IIOT</div>
-                <div className="text-sm font-semibold leading-tight">Predictive Maintenance</div>
+                <div className="mono text-[10px] tracking-[0.3em] text-white/60 leading-none">INDUSTRIAL IOT + AI</div>
+                <div className="text-sm font-semibold leading-tight">Smart Predictive Maintenance System</div>
               </div>
             </div>
             <nav className="flex items-center gap-1">
@@ -59,7 +59,7 @@ export default function Layout({ children }) {
         {children}
       </main>
       <footer className="border-t border-[var(--border)] py-3 mono text-[10px] text-white/40 tracking-[0.2em] text-center">
-        SENTINEL IIOT · PREDICTIVE MAINTENANCE SYSTEM · v1.0
+        SMART PREDICTIVE MAINTENANCE SYSTEM · v1.0
       </footer>
     </div>
   );

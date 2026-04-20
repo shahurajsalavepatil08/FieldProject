@@ -54,11 +54,14 @@ export default function Login() {
             <Lightning size={20} weight="bold" />
           </div>
           <div>
-            <div className="text-sm tracking-[0.3em] mono text-white/70">SENTINEL / IIOT</div>
-            <div className="text-2xl font-bold">Predictive Maintenance</div>
+            <div className="text-sm tracking-[0.3em] mono text-white/70">INDUSTRIAL IOT + AI</div>
+            <div className="text-2xl font-bold">Smart Predictive Maintenance System</div>
           </div>
         </div>
         <div className="relative z-10 space-y-6 max-w-md">
+          <div className="mono text-[11px] tracking-[0.3em] text-[var(--primary)]">
+            SMART PREDICTIVE MAINTENANCE SYSTEM
+          </div>
           <h1 className="text-5xl font-bold leading-[1.05]">
             Zero-downtime<br/>industrial intelligence.
           </h1>
@@ -81,6 +84,15 @@ export default function Login() {
       {/* right: form */}
       <div className="flex items-center justify-center p-6 sm:p-10">
         <form onSubmit={submit} className="w-full max-w-md panel p-8 space-y-6" data-testid="login-form">
+          <div className="flex items-center gap-3 pb-4 border-b border-[var(--border)] lg:hidden">
+            <div className="h-9 w-9 bg-[var(--primary)] grid place-items-center">
+              <Lightning size={18} weight="bold"/>
+            </div>
+            <div>
+              <div className="mono text-[10px] tracking-[0.3em] text-white/60">INDUSTRIAL IOT + AI</div>
+              <div className="text-lg font-bold leading-tight">Smart Predictive Maintenance System</div>
+            </div>
+          </div>
           <div>
             <div className="mono text-[11px] tracking-[0.3em] text-[var(--primary)] mb-2">
               {mode === "login" ? "SECURE ACCESS" : "NEW OPERATOR"}
